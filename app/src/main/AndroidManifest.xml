@@ -12,7 +12,8 @@
         <activity
             android:name=".jjj"
             android:label="@string/title_activity_jjj"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="sensorLandscape"><!--Permite tener movilhorizontal en las dos posiciones-->
