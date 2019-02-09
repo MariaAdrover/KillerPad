@@ -15,7 +15,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"><!--Permite tener movilhorizontal en las dos posiciones-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
