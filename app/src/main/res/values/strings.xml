@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">KillerPad</string>
+    <string name="menu">Menu</string>
+    <string name="joystick">Joystick</string>
+    <string name="buttons">Buttons</string>
+    <string name="board">Board</string>
+    <string name="go_to_pad_activity">go to pad activity</string>
+    <string name="title_activity_jjj">jjj</string>
+</resources>
