@@ -1,18 +1,52 @@
 package com.example.killerpad;
 
+import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 public class PadActivity extends AppCompatActivity {
+    private Socket socket = null;
+    private String ip = "192.168.1.46";
+    private int port = 8888;
+    private BufferedReader in;
+    private PrintWriter out;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pad);
 
+        //permitir conexion en el main
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build());
+
+        //solicitar conexion
+        while (this.socket == null) {
+            this.requestConnection();
+        }
+
+        //crear handler
+        this.handler = new Handler();
+
+        //configurar handler
+        this.handler.setHandler(this.socket, this.ip, this.port);
+
+        Thread t = new Thread(this.handler);
+        t.start();
+
+        //Enviar mensaje de prueba desde handler
+        this.handler.sendMessage("handler: holi desde el kk mando");
+
+        //crear los fragments
         FragmentManager fm = getSupportFragmentManager();
 
         Fragment board_fragment = fm.findFragmentById(R.id.board_container);
@@ -51,4 +85,25 @@ public class PadActivity extends AppCompatActivity {
         //actionBar.hide();
         getSupportActionBar().hide();
     }
+
+    private void requestConnection() {
+        try {
+            this.socket = new Socket(ip, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void sendMessage(String message) {
+        out.println(message);
+    }
+
+
+    public Handler getHandler() {
+        return this.handler;
+    }
+
+
+
 }
