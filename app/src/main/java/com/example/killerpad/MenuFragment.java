@@ -25,6 +25,14 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PadActivity.class);
+                String user = "mia";
+                String ip = "192.168.1.46";
+                int port = 8000;
+
+                intent.putExtra("user", user);
+                intent.putExtra("ip", ip);
+                intent.putExtra("port", port);
+
                 startActivity(intent);
             }
         });

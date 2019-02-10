@@ -33,6 +33,6 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        this.handler.sendMessage("action");
+        this.handler.sendMessage("act");
     }
 }
