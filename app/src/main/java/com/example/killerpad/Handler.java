@@ -21,7 +21,12 @@ public class Handler implements Runnable {
         this.port = port;
     }
 
-    public void configureConnection() { //cambiar al constructor? separar metodos?
+
+    //nombre cambiado (original: configureConnection)
+    public void setConnection() { //cambiar al constructor? separar metodos?
+
+        //si nulo vuelve a intentar conectarse
+
         while (this.socket == null) {
             try {
                 this.socket = new Socket(this.ip, this.port);
@@ -33,6 +38,7 @@ public class Handler implements Runnable {
         try {
             this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+
         } catch (IOException e) {
             this.socket = null;
             e.printStackTrace();

@@ -17,9 +17,11 @@ public class SplashActivity extends AppCompatActivity {
 
         TextView titulo = (TextView) findViewById(R.id.splash_text);
 
+        //carga la animacion
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.alpha_rotate_scale);
         titulo.startAnimation(rotate);
 
+        //al acabar la animacion...
         rotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -29,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 startActivity(new Intent(SplashActivity.this, MenuActivity.class));
-                SplashActivity.this.finish();
+                SplashActivity.this.finish();   //para no volver a la slpash
             }
 
             @Override
@@ -50,7 +52,7 @@ public class SplashActivity extends AppCompatActivity {
         // Remember that you should never show the action bar if the
         // status bar is hidden, so hide that too if necessary.
 
-        // Hide action bar
+        // Hide action bar, la barra de status (hora, notificacinoes, etc)
         //ActionBar actionBar = getActionBar();
         //actionBar.hide();
         getSupportActionBar().hide();

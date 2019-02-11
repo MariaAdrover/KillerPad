@@ -3,43 +3,60 @@ package com.example.killerpad;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-public class PadActivity extends AppCompatActivity {
+
+import android.util.Log;
+import android.view.View;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+public class PadActivity extends AppCompatActivity implements JoystickView.JoystickListener {
+  
     private Handler handler;
 
     public Handler getHandler() {
         return this.handler;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pad);
 
-        /*permitir conexion en el main??*/
+
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build());
 
         //poner el valor de las variables segun el valor puesto x los putExtra
         Bundle extras = getIntent().getExtras();
+
         String user = extras.getString("user");
         String ip = extras.getString("ip");
         int port = extras.getInt("port");
 
         //crear handler
         this.handler = new Handler(user, ip, port);
+        this.handler.setConnection();
 
-        this.handler.configureConnection();
+        //configurar handler
+        ////this.handler.setHandler(this.socket, this.ip, this.port);
 
         Thread t = new Thread(this.handler);
         t.start();
+
 
         //crear los fragments
         FragmentManager fm = getSupportFragmentManager();
@@ -79,5 +96,16 @@ public class PadActivity extends AppCompatActivity {
         //ActionBar actionBar = getActionBar();
         //actionBar.hide();
         getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onJoystickMoved(float xPercent, float yPercent, int source) {
+      //  Log.d("move","X: "+xPercent+" Y: "+yPercent);
+    }
+
+    @Override
+    public void directionChanged(String direction) {
+        Log.d("move",direction);
+        handler.sendMessage(direction);
     }
 }
