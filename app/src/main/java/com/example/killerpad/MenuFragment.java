@@ -29,6 +29,7 @@ public class MenuFragment extends Fragment {
         this.goPad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final Dialog dialog = new Dialog(getContext());
                 dialog.setContentView(R.layout.dialog_connect); //añade ñayout al dialogo
                 dialog.show();  //muestra el dialogo

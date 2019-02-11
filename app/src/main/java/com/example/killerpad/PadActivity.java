@@ -1,10 +1,20 @@
 package com.example.killerpad;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+
 import android.util.Log;
 import android.view.View;
 
@@ -13,33 +23,29 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class PadActivity extends AppCompatActivity implements JoystickView.JoystickListener {
-    private String user;
-    private String ip;
-    private int port;
+  
     private Handler handler;
 
     public Handler getHandler() {
         return this.handler;
     }
 
-    public void sendMessage(String message) {
-        this.handler.sendMessage(message);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pad);
 
-       //permitir conexion en el main
+
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build());
 
         //poner el valor de las variables segun el valor puesto x los putExtra
         Bundle extras = getIntent().getExtras();
-        this.user = extras.getString("user");
-        this.ip = extras.getString("ip");
-        this.port = extras.getInt("port");
+
+        String user = extras.getString("user");
+        String ip = extras.getString("ip");
+        int port = extras.getInt("port");
 
         //crear handler
         this.handler = new Handler(user, ip, port);
@@ -51,8 +57,6 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
         Thread t = new Thread(this.handler);
         t.start();
 
-        //Enviar mensaje de prueba desde handler
-        this.handler.sendMessage("handler: holi desde el kk mando");
 
         //crear los fragments
         FragmentManager fm = getSupportFragmentManager();

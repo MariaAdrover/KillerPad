@@ -3,9 +3,10 @@
     android:shareInterpolator="false">
     <rotate
         android:fromDegrees="0"
-        android:toDegrees="720"
+        android:toDegrees="360"
         android:pivotX="50%"
         android:pivotY="50%"
+
         android:duration="1000" />
 
     <alpha
@@ -16,10 +17,11 @@
     <scale
         android:pivotX="50%"
         android:pivotY="50%"
-        android:fromXScale=".1"
-        android:fromYScale=".1"
+        android:fromXScale=".5"
+        android:fromYScale=".5"
         android:toXScale="6.0"
         android:toYScale="6.0"
+
         android:duration="1500" />
 
 </set>
