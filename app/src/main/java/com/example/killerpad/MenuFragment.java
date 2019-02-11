@@ -26,22 +26,30 @@ public class MenuFragment extends Fragment {
 
         //añade listener en el boton.
         this.goPad = (Button) v.findViewById(R.id.go_to_pad);
-
-        //mostrar dialogo
         this.goPad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.dialog_connect);
-                dialog.show();
+                final Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_connect); //añade ñayout al dialogo
+                dialog.show();  //muestra el dialogo
 
+                FloatingActionButton bAceptar = dialog.findViewById(R.id.fButtonAceptar);
 
-                FloatingActionButton bGo = dialog.findViewById(R.id.fButtonAceptar);
-                bGo.setOnClickListener(new View.OnClickListener(){
-
+                bAceptar.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), PadActivity.class);
+                        String user = ((EditText) dialog.findViewById(R.id.username)).getText().toString();
+                        String ip = ((EditText) dialog.findViewById(R.id.ip)).getText().toString();
+
+                        //matadme por favor...
+                        int port = Integer.parseInt(((EditText) dialog.findViewById(R.id.puerto)).getText().toString());
+
+                        intent.putExtra("user", user);
+                        intent.putExtra("ip", ip);
+                        intent.putExtra("port", port);
+
+
                         startActivity(intent);
                     }
                 });
@@ -54,17 +62,17 @@ public class MenuFragment extends Fragment {
         this.buttonInfoDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new Dialog(getContext());
-                dialog.setContentView(R.layout.dialog_connect);
-                dialog.show();
-
-                String user = ((EditText) dialog.findViewById(R.id.ip)).getText().toString();
-
+                //poner dialogo con informacion (?)
             }
         });
 
         return v;
     }
+
+
+
+
+
 
 
 

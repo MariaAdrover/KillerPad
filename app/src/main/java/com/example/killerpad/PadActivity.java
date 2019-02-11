@@ -7,65 +7,60 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-
 public class PadActivity extends AppCompatActivity {
-    private Socket socket = null;
-    private String ip = "192.168.1.46";
-    private int port = 8888;
-    private BufferedReader in;
-    private PrintWriter out;
     private Handler handler;
+
+    public Handler getHandler() {
+        return this.handler;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pad);
 
-        //permitir conexion en el main
+        /*permitir conexion en el main??*/
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build());
 
-        //solicitar conexion
-        while (this.socket == null) {
-            this.requestConnection();
-        }
+        //poner el valor de las variables segun el valor puesto x los putExtra
+        Bundle extras = getIntent().getExtras();
+        String user = extras.getString("user");
+        String ip = extras.getString("ip");
+        int port = extras.getInt("port");
 
         //crear handler
-        this.handler = new Handler();
+        this.handler = new Handler(user, ip, port);
 
-        //configurar handler
-        this.handler.setHandler(this.socket, this.ip, this.port);
+        this.handler.configureConnection();
 
         Thread t = new Thread(this.handler);
         t.start();
 
-        //Enviar mensaje de prueba desde handler
-        this.handler.sendMessage("handler: holi desde el kk mando");
-
-        //crear los fragments
+        //crear los fragments del mando: joystick, buttons y panelInfo(board)
         FragmentManager fm = getSupportFragmentManager();
 
-        Fragment board_fragment = fm.findFragmentById(R.id.board_container);
-        if (board_fragment == null) {
-            board_fragment = new BoardFragment();
+        Fragment boardFragment;
+
+        boardFragment = fm.findFragmentById(R.id.board_container);
+        if (boardFragment == null) {
+            boardFragment = new BoardFragment();
             fm.beginTransaction()
-                    .add(R.id.board_container, board_fragment) .commit();
+                    .add(R.id.board_container, boardFragment) .commit();
         }
-        Fragment joystick_fragment = fm.findFragmentById(R.id.joystick_container);
-        if (joystick_fragment == null) {
-            joystick_fragment = new JoystickFragment();
+
+        Fragment joystickFragment = fm.findFragmentById(R.id.joystick_container);
+        if (joystickFragment == null) {
+            joystickFragment = new JoystickFragment();
             fm.beginTransaction()
-                    .add(R.id.joystick_container, joystick_fragment) .commit();
+                    .add(R.id.joystick_container, joystickFragment) .commit();
         }
-        Fragment buttons_fragment = fm.findFragmentById(R.id.buttons_container);
-        if (buttons_fragment == null) {
-            buttons_fragment = new ButtonsFragment();
+
+        Fragment buttonsFragment = fm.findFragmentById(R.id.buttons_container);
+        if (buttonsFragment == null) {
+            buttonsFragment = new ButtonsFragment();
             fm.beginTransaction()
-                    .add(R.id.buttons_container, buttons_fragment) .commit();
+                    .add(R.id.buttons_container, buttonsFragment) .commit();
         }
     }
 
@@ -85,25 +80,4 @@ public class PadActivity extends AppCompatActivity {
         //actionBar.hide();
         getSupportActionBar().hide();
     }
-
-    private void requestConnection() {
-        try {
-            this.socket = new Socket(ip, port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void sendMessage(String message) {
-        out.println(message);
-    }
-
-
-    public Handler getHandler() {
-        return this.handler;
-    }
-
-
-
 }
