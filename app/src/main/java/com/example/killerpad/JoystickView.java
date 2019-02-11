@@ -15,6 +15,7 @@ import android.view.View;
 public class JoystickView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener{
 
 
+
     private float centerX;  //coordenada x del que queremos que sea el centro del pad
     private float centerY;  //coordenada y del que queremos que sea el centro del pad
     private float baseRadius; //radio del circulo base
@@ -67,6 +68,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     }
     //este constructor ni idea pero por si acaso lo he dejado igual que los otros.
     // jej ok       --Pau
+
     public JoystickView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setZOrderOnTop(true);
@@ -101,7 +103,9 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             Canvas myCanvas = this.getHolder().lockCanvas();
             //crea nuevo objeto de tipo paint para pintar
             Paint colors = new Paint();
-            //pinta ttodo el canvas de color transparente >para< en modo clear para limpiarlo
+
+            //pinta ttodo el canvas de color transparente para en modo clear para limpiarlo
+
             myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             //elegimos color
             colors.setARGB(150, 255, 255, 255);
