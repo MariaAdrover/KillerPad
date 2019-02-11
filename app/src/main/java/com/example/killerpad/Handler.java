@@ -21,7 +21,8 @@ public class Handler implements Runnable {
         this.port = port;
     }
 
-    public void configureConnection() { //cambiar al constructor? separar metodos?
+    //nombre cambiado (original: configureConnection)
+    public void setConnection() { //cambiar al constructor? separar metodos?
 
         //si nulo vuelve a intentar conectarse
         while (this.socket == null) {

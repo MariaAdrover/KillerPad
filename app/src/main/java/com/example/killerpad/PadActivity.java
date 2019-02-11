@@ -1,43 +1,29 @@
 package com.example.killerpad;
 
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 public class PadActivity extends AppCompatActivity implements JoystickView.JoystickListener {
-    private Socket socket = null;
-    private String ip = "192.168.1.5";
-    private int port = 1500;
-    private BufferedReader in;
-    private PrintWriter out;
+    private String user;
+    private String ip;
+    private int port;
     private Handler handler;
 
     public Handler getHandler() {
         return this.handler;
     }
 
-    private void requestConnection() {
-        try {
-            this.socket = new Socket(ip, port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public void sendMessage(String message) {
-        out.println(message);
+        this.handler.sendMessage(message);
     }
 
     @Override
@@ -49,16 +35,18 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build());
 
-        //solicitar conexion
-        while (this.socket == null) {
-            this.requestConnection();
-        }
+        //poner el valor de las variables segun el valor puesto x los putExtra
+        Bundle extras = getIntent().getExtras();
+        this.user = extras.getString("user");
+        this.ip = extras.getString("ip");
+        this.port = extras.getInt("port");
 
         //crear handler
-        this.handler = new Handler();
+        this.handler = new Handler(user, ip, port);
+        this.handler.setConnection();
 
         //configurar handler
-        this.handler.setHandler(this.socket, this.ip, this.port);
+        ////this.handler.setHandler(this.socket, this.ip, this.port);
 
         Thread t = new Thread(this.handler);
         t.start();

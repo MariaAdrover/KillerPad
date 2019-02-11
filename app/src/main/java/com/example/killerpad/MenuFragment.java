@@ -34,11 +34,15 @@ public class MenuFragment extends Fragment {
                 dialog.show();  //muestra el dialogo
 
                 FloatingActionButton bAceptar = dialog.findViewById(R.id.fButtonAceptar);
+                FloatingActionButton bCancelar = dialog.findViewById(R.id.fButtonCancelar);
 
+                //evento al pular boton aceptar: configurar ursName, ip, puerto
                 bAceptar.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), PadActivity.class);
+
+                        // del dialogo coje el obj del editText e indicamos q es un edittext (parse). Luego pillamos el texto de dentro y lo pasamos a string
                         String user = ((EditText) dialog.findViewById(R.id.username)).getText().toString();
                         String ip = ((EditText) dialog.findViewById(R.id.ip)).getText().toString();
 
@@ -51,6 +55,14 @@ public class MenuFragment extends Fragment {
 
 
                         startActivity(intent);
+                    }
+                });
+
+                //evento al pusltar boton canclear: cerrar dialogo
+                bCancelar.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                       dialog.cancel();
                     }
                 });
             }
