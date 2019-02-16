@@ -19,12 +19,14 @@ public class MenuActivity extends AppCompatActivity {
     private static String TAG = "TAG";
     SharedPreferences.Editor sp;    // pq Editor?
 
+    // guarda las configuraciones de las shared preferences
     public void savePreferences(String key, String value){
         sp = getSharedPreferences("savedPrefs", MODE_PRIVATE).edit();    // pq es "s"
         sp.putString(key, value);
         sp.commit();
     }
 
+    // carga las preferencias de las shared preferences
     public String loadPreference(String key){
         SharedPreferences prefs = getSharedPreferences("savedPrefs", MODE_PRIVATE);
         String restoredText = prefs.getString(key, "tonto");

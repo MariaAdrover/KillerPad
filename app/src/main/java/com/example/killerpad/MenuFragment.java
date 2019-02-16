@@ -19,9 +19,6 @@ public class MenuFragment extends Fragment {
     private Button goPad;
     private FloatingActionButton buttonInfoDialog;
 
-    SharedPreferences.Editor sp;
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +73,7 @@ public class MenuFragment extends Fragment {
         EditText etIp = dialog.findViewById(R.id.ip);
         EditText etPort = dialog.findViewById(R.id.puerto);
 
+        // carga las configuraciones con las shared preferences
         etUsername.setText(((MenuActivity)getActivity()).loadPreference("user"));
         etIp.setText(((MenuActivity)getActivity()).loadPreference("ip"));
         etPort.setText(((MenuActivity)getActivity()).loadPreference("port"));
@@ -86,8 +84,6 @@ public class MenuFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PadActivity.class);
 
-                Log.d("TAG", "0");
-
                 //  coje del dialogo el obj del editText e indicamos q es un editText (parse). Luego pillamos el texto de dentro y lo pasamos a string
                 String user = ((EditText) dialog.findViewById(R.id.username)).getText().toString();
                 String ip = ((EditText) dialog.findViewById(R.id.ip)).getText().toString();
@@ -95,11 +91,12 @@ public class MenuFragment extends Fragment {
                 //matadme por favor...
                 int port = Integer.parseInt(((EditText) dialog.findViewById(R.id.puerto)).getText().toString());
 
+                // se las pasa por gracias al put extra
                 intent.putExtra("user", user);
                 intent.putExtra("ip", ip);
                 intent.putExtra("port", port);
 
-
+                // guarda las configuraciones en las shared preferences
                 ((MenuActivity)getActivity()).savePreferences("user",user);
                 ((MenuActivity)getActivity()).savePreferences("ip",ip);
                 ((MenuActivity)getActivity()).savePreferences("port",Integer.toString(port));
