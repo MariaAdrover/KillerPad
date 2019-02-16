@@ -64,15 +64,7 @@ public class Handler implements Runnable {
 
     @Override
     public void run() {
-        out.println("from:P" + user);
-        while(true) {
-            out.println("jelou!! sigo aqui :-D");
-            //listenServer();
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        //leer msjs
     }
 }
+
