@@ -17,7 +17,12 @@ import android.widget.EditText;
 
 import static android.support.v4.content.ContextCompat.getSystemService;
 
-public class MenuFragment extends Fragment {
+
+/**
+ * guardar el color
+ */
+
+public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private Bundle sis;
     private Button goPad;
@@ -64,21 +69,26 @@ public class MenuFragment extends Fragment {
 
     //************** myMethods ****************
 
-    private void showInfoDialog(){
+    private void showInfoDialog() {
+        FloatingActionButton[] a;
+
+
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_color_picker); //añade ñayout al dialogo
         dialog.show();  //muestra el dialogo
+
+
     }
 
-    private void loadConfig(String key, EditText et){
-        et.setText(((MenuActivity)getActivity()).loadPreference(key));
+    private void loadConfig(String key, EditText et) {
+        et.setText(((MenuActivity) getActivity()).loadPreference(key));
     }
 
-    private void saveConfig(String key, String value){
-        ((MenuActivity)getActivity()).savePreferences(key, value);
+    private void saveConfig(String key, String value) {
+        ((MenuActivity) getActivity()).savePreferences(key, value);
     }
 
-    private void showConfigDialog(){
+    private void showConfigDialog() {
 
         FloatingActionButton bAceptar;
         FloatingActionButton bCancelar;
@@ -102,13 +112,12 @@ public class MenuFragment extends Fragment {
 
         // carga las configuraciones con las shared preferences
         loadConfig("user", etUsername);
-        loadConfig("ip",etIp);
+        loadConfig("ip", etIp);
         loadConfig("port", etPort);
-
-
+        bAceptar.setOnClickListener(this);
 
         //EVENTO: al pular boton aceptar: configurar ursName, ip, puerto
-        bAceptar.setOnClickListener(new View.OnClickListener(){
+        bAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
@@ -140,7 +149,7 @@ public class MenuFragment extends Fragment {
         });
 
         //EVENTO: al pusltar boton canclear: cerrar dialogo
-        bCancelar.setOnClickListener(new View.OnClickListener(){
+        bCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
@@ -149,11 +158,20 @@ public class MenuFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        String s = v.getResources().getResourceEntryName(v.getId());
 
+        switch (s){
+            case "rojo":
+                break;
 
+            case "azul":
+                break;
 
+            case "verde":
+                break;
 
-
-
-
+        }
+    }
 }

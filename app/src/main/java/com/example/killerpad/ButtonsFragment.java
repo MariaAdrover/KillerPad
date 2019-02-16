@@ -27,12 +27,14 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
         this.bSend = v.findViewById(R.id.send);
         bSend.setOnClickListener(this);
+        this.activity = (PadActivity)getActivity();
 
         return v;
     }
 
     @Override
     public void onClick(View v) {
-        this.handler.sendMessage("act");
+        this.handler.sendMessage("pad:shoot");
+
     }
 }
