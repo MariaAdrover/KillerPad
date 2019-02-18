@@ -29,7 +29,7 @@ public class MenuActivity extends AppCompatActivity {
     // carga las preferencias de las shared preferences
     public String loadPreference(String key){
         SharedPreferences prefs = getSharedPreferences("savedPrefs", MODE_PRIVATE);
-        String restoredText = prefs.getString(key, "tonto");
+        String restoredText = prefs.getString(key, "");
         return restoredText;
     }
 

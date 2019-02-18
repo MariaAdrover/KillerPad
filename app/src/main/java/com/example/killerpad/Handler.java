@@ -11,12 +11,18 @@ import java.net.Socket;
 
 public class Handler implements Runnable {
     private PadActivity padA;
+
     private Socket socket;
     private String user;
     private String ip;
     private int port;
+
     private BufferedReader in;
     private PrintWriter out;
+
+    private boolean alive;
+    public boolean connected;
+
     private static String TAG = "handler";
 
     public Handler(PadActivity activity, String user, String ip, int port) {
@@ -24,6 +30,9 @@ public class Handler implements Runnable {
         this.user = user;
         this.ip = ip;
         this.port = port;
+
+        this.alive = true;
+        this.connected = false;
     }
 
 
@@ -76,7 +85,7 @@ public class Handler implements Runnable {
     public void listenServer() {
         try {
             String data = this.in.readLine();
-            Log.i(TAG, data);
+//            Log.i(TAG, data);
             if (data != null) {
                 Log.i(TAG, "datos recibidos = " + data);
                 processServerMessage(data);
@@ -90,9 +99,12 @@ public class Handler implements Runnable {
 
     @Override
     public void run() {
-        out.println("from:P");
+        setConnection();
+        connected = true;
+        padA.getSpinner().cancel();
+        out.println("from:P/user:"+user);
         Log.i(TAG, "run handler");
-        while(true) {
+        while(alive) {
             try {
                 Log.i(TAG, "try handler");
                 listenServer();
@@ -101,5 +113,9 @@ public class Handler implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }
