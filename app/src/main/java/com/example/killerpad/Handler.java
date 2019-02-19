@@ -65,15 +65,13 @@ public class Handler implements Runnable {
 
     private void processServerMessage(String data) {
         String header = data.substring(0, 3);
-        int p = Integer.parseInt(data.substring(3));
-        Log.i(TAG, "header " + header);//quitar
-        Log.i(TAG, "points " + p);//quitar
 
         switch (header.trim()) {
             case "vib": // vibrar
                 padA.vibrar(300);
                 break;
             case "pnt": // puntos
+                int p = Integer.parseInt(data.substring(3));
                 padA.updateScores(p);
                 break;
             case "ded": // morir
