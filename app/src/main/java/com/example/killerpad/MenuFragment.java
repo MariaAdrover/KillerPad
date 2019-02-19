@@ -144,7 +144,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 saveConfig("ip", ip);
                 saveConfig("port", String.valueOf(port));
 
+                dialog.cancel();
                 startActivity(intent);
+                getActivity().finish();
+
             }
         });
 

@@ -46,7 +46,7 @@ public class BoardFragment extends Fragment{
     private void askForConfirmation() {
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_exit);
-        dialog.show();
+
 
         FloatingActionButton bAceptar = dialog.findViewById(R.id.byeB);
         FloatingActionButton bCancelar = dialog.findViewById(R.id.cancelByeB);
@@ -55,10 +55,10 @@ public class BoardFragment extends Fragment{
         bAceptar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PadActivity.class);
 
+                dialog.cancel();
                 ((PadActivity) getActivity()).sayBye();
-                startActivity(intent);
+
             }
         });
 
@@ -66,15 +66,13 @@ public class BoardFragment extends Fragment{
         bCancelar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PadActivity.class);
-                startActivity(intent);
-                dialog.hide();
 
-                getActivity().finish();
-                // matar hilo
-                // ((PadActivity) getActivity()).sayBye();  (?)
+                dialog.cancel();
+
             }
         });
+
+        dialog.show();
     }
 
     public TextView getScoreTV(){
