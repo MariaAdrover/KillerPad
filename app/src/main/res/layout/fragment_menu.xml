@@ -7,75 +7,87 @@
 
     <Button
         android:id="@+id/go_to_pad"
-        android:layout_width="wrap_content"
-        android:layout_height="59dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="76dp"
+        android:layout_width="200dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/go_to_pad_activity"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toEndOf="@+id/buttonCustomization"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/buttonInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="36dp"
-        android:clickable="true"
-        app:elevation="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCustomization"
+        app:layout_constraintTop_toBottomOf="@+id/shipView"
         app:srcCompat="@android:drawable/ic_dialog_info" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/buttonScores"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:clickable="true"
         app:elevation="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonInfo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shipView"
         app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/buttonCustomization"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_width="76dp"
+        android:layout_height="77dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:clickable="true"
         app:elevation="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonScores"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonScores"
+        app:layout_constraintTop_toBottomOf="@+id/shipView"
         app:srcCompat="@android:drawable/ic_menu_manage" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
         android:text="@string/menu"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.example.killerpad.ShipView
+        android:id="@+id/shipView"
+        android:layout_width="262dp"
+        android:layout_height="154dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.679"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="340dp"
-        android:layout_height="198dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="230dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/go_to_pad"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic[8]" />
+        app:layout_constraintVertical_bias="0.699"
+        app:srcCompat="@color/colorAccent" />
 
 </android.support.constraint.ConstraintLayout>
