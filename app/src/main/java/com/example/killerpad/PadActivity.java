@@ -30,7 +30,7 @@ import java.net.Socket;
 public class PadActivity extends AppCompatActivity implements JoystickView.JoystickListener {
 
     private Handler handler;
-    private static final String TAG = "handler";
+    private static final String TAG = "hola";
     private int topScore;
     private int score;
 
@@ -41,6 +41,8 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pad);
+        Log.d(TAG,"on create");
+
 
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -74,9 +76,13 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
         spinner.show();
 
         //crear handler
-        this.handler = new Handler(this, user, ip, port);
-        Thread t = new Thread(this.handler);
-        t.start();
+        if(handler==null) {
+            Log.d(TAG,"handler1");
+
+            this.handler = new Handler(this, user, ip, port);
+            Thread t = new Thread(this.handler);
+            t.start();
+        }
 
         //crear los fragments
         fragmentCreate();
@@ -103,6 +109,19 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
         Log.d(TAG,"on resume");
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"on pause");
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"on stop");
+
+    }
 
     public void fragmentCreate(){
 

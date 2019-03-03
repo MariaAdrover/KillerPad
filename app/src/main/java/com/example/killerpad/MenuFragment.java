@@ -101,6 +101,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_connect); //añade ñayout al dialogo
         dialog.show();  //muestra el dialogo
+        
+
 
         bAceptar = dialog.findViewById(R.id.fButtonAceptar);
         bCancelar = dialog.findViewById(R.id.fButtonCancelar);
