@@ -11,6 +11,7 @@ import android.widget.Button;
 public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     private Button bSend;
+    private Button bSuicide;
     private PadActivity activity;
     private Handler handler;
 
@@ -27,6 +28,10 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
         this.bSend = v.findViewById(R.id.send);
         bSend.setOnClickListener(this);
+
+        this.bSuicide = v.findViewById(R.id.killMe);
+        bSuicide.setOnClickListener(this);
+
         this.activity = (PadActivity)getActivity();
 
         return v;
@@ -34,7 +39,15 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        this.handler.sendMessage("pad:shoot");
+        int button = v.getId();
+
+        if (button == R.id.killMe) {
+            this.handler.sendMessage("replay");
+
+        } else if (button == R.id.send) {
+            this.handler.sendMessage("shoot");
+
+        }
 
     }
 }
