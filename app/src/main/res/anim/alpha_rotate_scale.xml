@@ -22,10 +22,9 @@
         android:pivotY="50%"
         android:fromXScale=".5"
         android:fromYScale=".5"
-        android:toXScale="6.0"
-        android:toYScale="6.0"
-
-        android:duration="1700" />
+        android:toXScale="4.0"
+        android:toYScale="4.0"
+        android:duration="2000" />
 
 </set>
 
