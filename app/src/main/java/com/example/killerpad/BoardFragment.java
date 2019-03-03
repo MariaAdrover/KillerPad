@@ -47,7 +47,6 @@ public class BoardFragment extends Fragment{
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_exit);
 
-
         FloatingActionButton bAceptar = dialog.findViewById(R.id.byeB);
         FloatingActionButton bCancelar = dialog.findViewById(R.id.cancelByeB);
 
@@ -55,7 +54,6 @@ public class BoardFragment extends Fragment{
         bAceptar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
                 dialog.cancel();
                 ((PadActivity) getActivity()).sayBye();
 
@@ -66,9 +64,7 @@ public class BoardFragment extends Fragment{
         bCancelar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
                 dialog.cancel();
-
             }
         });
 
