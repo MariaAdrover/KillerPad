@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.support.v4.content.ContextCompat.getSystemService;
 
 
@@ -39,9 +41,11 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        Vibrator vib = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-        vib.vibrate(500);
 
+        // cargar las topscores de shared preferences
+        SharedPreferences prefs = getContext().getSharedPreferences ( "savedPrefs", MODE_PRIVATE);
+        //recupermos el textview y le ponemos de texto, el valor de las shared preferences
+        ((TextView) v.findViewById(R.id.tops)).setText(prefs.getString("topScore","0"));
 
         this.goPad = (Button) v.findViewById(R.id.go_to_pad);
         this.buttonInfoDialog = (FloatingActionButton) v.findViewById(R.id.buttonInfo);
