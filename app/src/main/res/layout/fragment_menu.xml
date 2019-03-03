@@ -12,40 +12,44 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="32dp"
         android:text="@string/go_to_pad_activity"
+        android:background="@drawable/rounded_button_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/buttonInfo"
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_default_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonCustomization"
         app:layout_constraintTop_toBottomOf="@+id/shipView"
         app:srcCompat="@android:drawable/ic_dialog_info" />
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/buttonScores"
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:clickable="true"
+        android:background="@drawable/rounded_default_button"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shipView"
         app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/buttonCustomization"
         android:layout_width="76dp"
         android:layout_height="77dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:clickable="true"
+        android:background="@drawable/rounded_default_button"
         app:elevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonScores"

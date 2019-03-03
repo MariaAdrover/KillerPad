@@ -6,61 +6,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/pinkButton"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:clickable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/colorAccent" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:clickable="true"
-        app:backgroundTint="@color/colorPrimary"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
-        app:layout_constraintStart_toEndOf="@+id/floatingActionButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_shape_button"
+        android:backgroundTint="@color/colorPink"
         android:clickable="true"
-        app:backgroundTint="@android:color/holo_orange_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/transparent" />
+        app:layout_constraintEnd_toStartOf="@+id/greenButton"
+        app:layout_constraintStart_toEndOf="@+id/orangeButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/greenButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Button"
+        android:background="@drawable/rounded_shape_button"
+        android:clickable="true"
+        app:backgroundTint="@color/colorGreen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton3" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/orangeButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_shape_button"
+        android:backgroundTint="@color/colorOrange"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/accept"
+        android:layout_width="102dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Select"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orangeButton" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/colorTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/accept"
+        app:layout_constraintHorizontal_bias="0.427"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
 </android.support.constraint.ConstraintLayout>
