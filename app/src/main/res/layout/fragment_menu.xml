@@ -81,13 +81,13 @@
         android:id="@+id/imageView"
         android:layout_width="230dp"
         android:layout_height="150dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/go_to_pad"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.699"
-        app:srcCompat="@color/colorAccent" />
+        app:srcCompat="@drawable/logo" />
 
 </android.support.constraint.ConstraintLayout>
