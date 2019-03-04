@@ -296,6 +296,14 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
 
     }
 
+    private void resetBoard() {
+
+        FragmentManager fm = getSupportFragmentManager();
+        BoardFragment bf = (BoardFragment) fm.findFragmentById(R.id.board_container);
+        TextView text = bf.getScoreTV();
+        text.setText("0");
+    }
+
     @Override
     public void onJoystickMoved(float xPercent, float yPercent, int source) {
         //  Log.d("move","X: "+xPercent+" Y: "+yPercent);
@@ -339,6 +347,7 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
                 sayBye();
             } else if (clickedButtonID == R.id.botonRestart) {
                 handler.sendMessage("replay");
+                resetBoard();
                 restart.hide();
             }
     }
