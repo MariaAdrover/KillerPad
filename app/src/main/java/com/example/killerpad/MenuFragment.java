@@ -3,6 +3,7 @@ package com.example.killerpad;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
