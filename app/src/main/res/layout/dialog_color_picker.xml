@@ -4,31 +4,115 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
 
     <Button
-        android:id="@+id/pinkButton"
+        android:id="@+id/blueButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_shape_button"
+        android:backgroundTint="@color/colorBlue"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fucsiaButton" />
+
+    <Button
+        android:id="@+id/whiteButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_shape_button"
+        android:clickable="true"
+        app:backgroundTint="@color/colorWhite"
+        app:layout_constraintEnd_toStartOf="@+id/purpleButton"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/fucsiaButton"
+        app:layout_constraintTop_toBottomOf="@+id/yellowButton" />
+
+    <Button
+        android:id="@+id/aquaMarineButton"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_shape_button"
+        android:backgroundTint="@color/colorAquaMarine"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/purpleButton" />
+
+    <Button
+        android:id="@+id/fucsiaButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_shape_button"
+        android:backgroundTint="@color/colorFucsia"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orangeButton" />
+
+    <Button
+        android:id="@+id/purpleButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_shape_button"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPurple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/limaButton" />
+
+    <Button
+        android:id="@+id/redButton"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_shape_button"
-        android:backgroundTint="@color/colorPink"
+        android:backgroundTint="@color/colorRed"
         android:clickable="true"
-        app:layout_constraintEnd_toStartOf="@+id/greenButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/aquaMarineButton"
+        app:layout_constraintStart_toEndOf="@+id/blueButton"
+        app:layout_constraintTop_toBottomOf="@+id/whiteButton" />
+
+    <Button
+        android:id="@+id/yellowButton"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_shape_button"
+        android:backgroundTint="@color/colorYellow"
+        android:clickable="true"
+        app:layout_constraintEnd_toStartOf="@+id/limaButton"
         app:layout_constraintStart_toEndOf="@+id/orangeButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/greenButton"
+        android:id="@+id/limaButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_shape_button"
         android:clickable="true"
-        app:backgroundTint="@color/colorGreen"
+        app:backgroundTint="@color/colorLima"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,37 +120,13 @@
         android:id="@+id/orangeButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_shape_button"
         android:backgroundTint="@color/colorOrange"
         android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/accept"
-        android:layout_width="102dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Select"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orangeButton" />
-
-    <TextView
-        android:id="@+id/colorTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/accept"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
 
 </android.support.constraint.ConstraintLayout>

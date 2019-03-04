@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * guardar el color
@@ -96,8 +98,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         loadConfig("ip", etIp);
         loadConfig("port", etPort);
 
+
+
         // guarda este color para tener uno por defecto
-        saveConfig("color", "123456");
+        // saveConfig("color", "123456");
 
         bAceptar.setOnClickListener(this);
         bCancelar.setOnClickListener(this);
@@ -119,24 +123,26 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private void addColorListeners() {
 
-        //FloatingActionButton[] colorButton = new FloatingActionButton[10]; //test
-
-        Button colorOrangeButton;
-        Button colorGreenButton;
-        Button colorPinkButton;
-        Button acceptButton;
+        Button[] colorButton = new Button[9];
+        ArrayList<Button> arrButtons = new ArrayList<>();
 
 
-        colorOrangeButton = this.colorDialog.findViewById(R.id.orangeButton);
-        colorGreenButton = this.colorDialog.findViewById(R.id.greenButton);
-        colorPinkButton = this.colorDialog.findViewById(R.id.pinkButton);
-        acceptButton = this.colorDialog.findViewById(R.id.accept);
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.orangeButton));
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.limaButton));
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.yellowButton));
 
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.fucsiaButton));
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.whiteButton));
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.purpleButton));
 
-        colorOrangeButton.setOnClickListener(this);
-        colorGreenButton.setOnClickListener(this);
-        colorPinkButton.setOnClickListener(this);
-        acceptButton.setOnClickListener(this);
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.blueButton));
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.redButton));
+        arrButtons.add((Button) this.colorDialog.findViewById(R.id.aquaMarineButton));
+
+        for (int button = 0; button < arrButtons.size(); button++) {
+            arrButtons.get(button).setOnClickListener(this);
+        }
+
 
     }
 
@@ -156,28 +162,59 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+
         switch (v.getId()) {
 
             // dialoog de los colores
             case R.id.orangeButton:
-                this.saveConfig("color", "#ff9800");
-                ((TextView) this.colorDialog.findViewById(R.id.colorTest)).setText("naranja");
+                saveConfig("color", "ff9800");
+                acceptColor();
                 break;
 
-            case R.id.pinkButton:
-                this.saveConfig("color", "dd4db7");
-                ((TextView) this.colorDialog.findViewById(R.id.colorTest)).setText("rojo");
+            case R.id.blueButton:
+                saveConfig("color", "257EFF");
+                acceptColor();
                 break;
 
-            case R.id.greenButton:
-                this.saveConfig("color", "#00ff3f");
-                ((TextView) this.colorDialog.findViewById(R.id.colorTest)).setText("verde");
+            case R.id.limaButton:
+                saveConfig("color", "A7FF18");
+                acceptColor();
                 break;
+
+            case R.id.redButton:
+                saveConfig("color", "FF0000");
+                acceptColor();
+                break;
+
+            case R.id.aquaMarineButton:
+                saveConfig("color", "11bfb9");
+                acceptColor();
+                break;
+
+            case R.id.fucsiaButton:
+                saveConfig("color", "f24694");
+                acceptColor();
+                break;
+
+            case R.id.whiteButton:
+                saveConfig("color", "ffffff");
+                acceptColor();
+                break;
+
+            case R.id.yellowButton:
+                saveConfig("color", "F0EB3B");
+                acceptColor();
+                break;
+
+            case R.id.purpleButton:
+                saveConfig("color", "6E28E0");
+                acceptColor();
+                break;
+
+
 
             // dialogo para empezar nueva partida
-            case R.id.accept:
-                this.colorDialog.cancel();
-                break;
+
 
             case R.id.fButtonAceptar:
                 Intent intent;
@@ -220,10 +257,18 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.fButtonCancelar:
-                this.colorDialog.cancel();
+                this.configurationDialog.cancel();
                 break;
 
         }
+    }
+
+    public void acceptColor(){
+        ShipView tpm = ((ShipView) ((MenuActivity)getActivity()).findViewById(R.id.shipView));
+
+        tpm.updateColor((String) getContext().getSharedPreferences("savedPrefs",Context.MODE_PRIVATE).getString("color","ffffff"));
+
+        this.colorDialog.cancel();
     }
 
 }
