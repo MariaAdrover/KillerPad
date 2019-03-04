@@ -30,7 +30,8 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
         bSend.setOnClickListener(this);
 
         this.bSuicide = v.findViewById(R.id.killMe);
-        bSuicide.setOnClickListener(this);
+        // -- escuchador desactivado --
+        //bSuicide.setOnClickListener(this);
 
         this.activity = (PadActivity)getActivity();
 
