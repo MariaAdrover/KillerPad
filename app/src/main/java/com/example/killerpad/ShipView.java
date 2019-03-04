@@ -32,7 +32,7 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
     public ShipView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        SharedPreferences pref = getContext().getSharedPreferences("savefPrefs", Context.MODE_PRIVATE);
+        SharedPreferences pref = getContext().getSharedPreferences("savedPrefs", Context.MODE_PRIVATE);
         this.sColor = pref.getString("color", "abcdef");
 
         if(holder==null) {

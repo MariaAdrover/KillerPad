@@ -1,12 +1,17 @@
 package com.example.killerpad;
 
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.TextView;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Handler implements Runnable {
     private PadActivity padA;
@@ -126,15 +131,19 @@ public class Handler implements Runnable {
         setConnection();
         connected = true;
         padA.getSpinner().cancel();
-        //out.println("from:P/user:"+user);
-        // Manda color rosa, luego tendra que ser la variable que esta en shared preferences
-        out.println("fromPnew:" + user + "&" + "dd4db7"); // >> Hex color value //dd4db7  //4ae2d6   0x hex
+
+        // cargar el color de la nave de shared preferences
+        // >> Hex color value
+        SharedPreferences prefs = this.padA.getSharedPreferences ( "savedPrefs", MODE_PRIVATE);
+        String color = prefs.getString("color","ffffff");
+
+        out.println("fromPnew:" + user + "&" + color);
         Log.d(TAG, "run handler");
         while(alive) {
             try {
                 Log.d(TAG, "handler: try handler");
                 listenServer();
-                Thread.sleep(2000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 Log.d(TAG, "handler run excepcion");
