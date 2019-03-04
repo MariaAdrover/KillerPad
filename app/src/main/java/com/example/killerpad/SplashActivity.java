@@ -1,8 +1,10 @@
 package com.example.killerpad;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +44,8 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 startActivity(new Intent(SplashActivity.this, MenuActivity.class));
+                Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vib.vibrate(500);
                 SplashActivity.this.finish();   //para no volver a la slpash
             }
 
