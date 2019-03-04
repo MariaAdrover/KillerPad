@@ -3,6 +3,7 @@ package com.example.killerpad;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
+import static android.content.Context.MODE_PRIVATE;
+import static android.support.v4.content.ContextCompat.getSystemService;
 import java.util.ArrayList;
 
 
@@ -44,9 +48,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         // carga el layout
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        Vibrator vib = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-        vib.vibrate(400);
-
+        // cargar las topscores de shared preferences
+        SharedPreferences prefs = getContext().getSharedPreferences ( "savedPrefs", MODE_PRIVATE);
+      
+        //recupermos el textview y le ponemos de texto, el valor de las shared preferences
+        ((TextView) v.findViewById(R.id.tops)).setText(prefs.getString("topScore","0"));
+      
         // para comenzar nueva partida => muestra el dialogo de conifguracion
         this.goToPad = (Button) v.findViewById(R.id.go_to_pad);
 
