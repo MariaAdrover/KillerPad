@@ -17,7 +17,7 @@ import android.widget.EditText;
 public class MenuActivity extends AppCompatActivity {
 
     private static String TAG = "TAG";
-    SharedPreferences.Editor sp;    // pq Editor?
+    private SharedPreferences.Editor sp;    // pq Editor?
 
     // guarda las configuraciones de las shared preferences
     public void savePreferences(String key, String value){
@@ -47,9 +47,6 @@ public class MenuActivity extends AppCompatActivity {
                     .add(R.id.menu_container, fragment) .commit();
         }
 
-
-
-
     }
 
     @Override
@@ -67,6 +64,14 @@ public class MenuActivity extends AppCompatActivity {
         //ActionBar actionBar = getActionBar();
         //actionBar.hide();
         getSupportActionBar().hide();
+    }
+
+    public SharedPreferences.Editor getSp() {
+        return sp;
+    }
+
+    public void setSp(SharedPreferences.Editor sp) {
+        this.sp = sp;
     }
 
 
