@@ -12,45 +12,54 @@
         android:layout_height="62dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_button_start"
         android:text="@string/go_to_pad_activity"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/buttonInfo"
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/rounded_default_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonCustomization"
         app:layout_constraintTop_toBottomOf="@+id/shipView"
+        app:layout_constraintVertical_bias="0.466"
         app:srcCompat="@android:drawable/ic_dialog_info" />
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/buttonScores"
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/rounded_default_button"
         android:clickable="true"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shipView"
+        app:layout_constraintVertical_bias="0.45"
         app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/buttonCustomization"
         android:layout_width="76dp"
         android:layout_height="77dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/rounded_default_button"
         android:clickable="true"
         app:elevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonScores"
         app:layout_constraintTop_toBottomOf="@+id/shipView"
+        app:layout_constraintVertical_bias="0.474"
         app:srcCompat="@android:drawable/ic_menu_manage" />
 
     <TextView

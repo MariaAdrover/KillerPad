@@ -2,6 +2,7 @@ package com.example.killerpad;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,17 +22,18 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
     private float centerX;
     private float centerY;
     private float baseRadius;
-
+    private String sColor;
+    Canvas myCanvas;
 
     public ShipView(Context context) {
         super(context);
-
-
-
     }
 
     public ShipView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        SharedPreferences pref = getContext().getSharedPreferences("savefPrefs", Context.MODE_PRIVATE);
+        this.sColor = pref.getString("color", "abcdef");
 
         if(holder==null) {
             holder = getHolder();
@@ -44,7 +46,10 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
         super(context, attrs, defStyleAttr);
     }
 
-
+    public void updateColor(String newColor){
+        this.sColor = newColor;
+        drawCanvas(centerX,centerY);
+    }
 
 
     public void setupDimensions(){
@@ -64,17 +69,22 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
         //Esta condición mira si el objeto SurfaceView ha sido creado en pantalla.
         if (holder.getSurface().isValid()) {
+
             //almacena el canvas en variable
-            Canvas myCanvas = this.getHolder().lockCanvas();
+            this.myCanvas = this.getHolder().lockCanvas();
+
             //crea nuevo objeto de tipo paint para pintar
             Paint colors = new Paint();
 
             //pinta ttodo el canvas de color transparente para en modo clear para limpiarlo
-            myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            this.myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
             //elegimos color
-            colors.setARGB(255, 200, 200, 200);
+            colors.setColor(Color.parseColor("#" + this.sColor));
+
             //pintamos en el canvas un circulo con las coordenadas, el radio y el color escogido
-            myCanvas.drawCircle(newX, newY, baseRadius, colors);
+            this.myCanvas.drawCircle(newX, newY, baseRadius, colors);
+
             //le pasamos la variable canvas para que actualice el canvas del surface.
             getHolder().unlockCanvasAndPost(myCanvas);
             //   }
