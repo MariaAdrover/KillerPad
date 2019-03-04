@@ -22,7 +22,7 @@ import android.widget.TextView;
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private Bundle sis;
-    private Button goPad;
+    private Button goToPad;
     private Button buttonInfoDialog;
 
     //Dialogs
@@ -46,13 +46,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         vib.vibrate(400);
 
         // para comenzar nueva partida => muestra el dialogo de conifguracion
-        this.goPad = (Button) v.findViewById(R.id.go_to_pad);
+        this.goToPad = (Button) v.findViewById(R.id.go_to_pad);
 
         // para elegit el color de la nave
         this.buttonInfoDialog = (Button) v.findViewById(R.id.buttonInfo);
 
         //añade listener en el boton.
-        this.goPad.setOnClickListener(new View.OnClickListener() {
+        this.goToPad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -96,6 +96,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         loadConfig("ip", etIp);
         loadConfig("port", etPort);
 
+        // guarda este color para tener uno por defecto
+        saveConfig("color", "123456");
+
         bAceptar.setOnClickListener(this);
         bCancelar.setOnClickListener(this);
 
@@ -116,7 +119,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private void addColorListeners() {
 
-        FloatingActionButton[] colorButton = new FloatingActionButton[10]; //test
+        //FloatingActionButton[] colorButton = new FloatingActionButton[10]; //test
 
         Button colorOrangeButton;
         Button colorGreenButton;
@@ -140,7 +143,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private void showConfigDialog() {
 
         this.configurationDialog = new Dialog(this.getContext());
-        this.configurationDialog.setContentView(R.layout.dialog_configuration);
+        this.configurationDialog.setContentView(R.layout.dialog_connect);
         this.loadConfigurationDialoog();
         this.configurationDialog.show();
 
@@ -157,17 +160,17 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
             // dialoog de los colores
             case R.id.orangeButton:
-                this.saveConfig("color", "#333456");
+                this.saveConfig("color", "#ff9800");
                 ((TextView) this.colorDialog.findViewById(R.id.colorTest)).setText("naranja");
                 break;
 
             case R.id.pinkButton:
-                this.saveConfig("color", "ff0000");
+                this.saveConfig("color", "dd4db7");
                 ((TextView) this.colorDialog.findViewById(R.id.colorTest)).setText("rojo");
                 break;
 
             case R.id.greenButton:
-                this.saveConfig("color", "#33cc33");
+                this.saveConfig("color", "#00ff3f");
                 ((TextView) this.colorDialog.findViewById(R.id.colorTest)).setText("verde");
                 break;
 
