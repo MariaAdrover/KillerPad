@@ -32,13 +32,18 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
     public ShipView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        //cargamos de las sharedpreferences el color en hexadecimal y lo guardamos en el atributo "sColor"
+        //su valor por defecto es "fffff" (color blanco)
         SharedPreferences pref = getContext().getSharedPreferences("savedPrefs", Context.MODE_PRIVATE);
-        this.sColor = pref.getString("color", "abcdef");
+        this.sColor = pref.getString("color", "ffffff");
 
+
+        //si ya tiene "holder" (SurfaceHolder) le añadimos el que tiene la clase.
         if(holder==null) {
             holder = getHolder();
             holder.addCallback(this);
         }
+        //le añadimos el listener
         setOnTouchListener(this);
     }
 
@@ -47,12 +52,15 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
     }
 
     public void updateColor(String newColor){
+        //cambia el color con el que se pintara la nave y actualiza el canvas
         this.sColor = newColor;
         drawCanvas(centerX,centerY);
     }
 
 
     public void setupDimensions(){
+        //establece las dimensiones que tendrá la nave y posición central
+
         centerX = getWidth() / 2;           //centro del ancho donde está contenido
         centerY = getHeight() / 2;          //centro del alto donde está contenido
         baseRadius = Math.min(getWidth(), getHeight()) / 3.5f;
@@ -66,6 +74,7 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
 
     private void drawCanvas(float newX, float newY) {
+        // pinta la nave con las coordenadas pasadas por parametros
 
         //Esta condición mira si el objeto SurfaceView ha sido creado en pantalla.
         if (holder.getSurface().isValid()) {
@@ -95,7 +104,10 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        //al crearse la Shipview
+        //establecemos las dimensiones
         setupDimensions();
+        //actualizamos el canvas
         drawCanvas(centerX,centerY);
 
     }
@@ -112,11 +124,16 @@ public class ShipView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        //al tocar la ShipView
 
+        //si se esta tocando
         if(event.getAction() != event.ACTION_UP){
-
+            //se pinta con las coordenadas del dedo
             drawCanvas(event.getX(),event.getY());
         }else{
+            //en caso contrario
+            //se pinta en el centro
+
             drawCanvas(centerX,centerY);
         }
 

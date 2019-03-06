@@ -27,6 +27,7 @@ public class BoardFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_board, container, false);
 
         this.scoreTV = (TextView) v.findViewById(R.id.scoreTV);
@@ -44,6 +45,10 @@ public class BoardFragment extends Fragment{
     }
 
     private void askForConfirmation() {
+
+        //Método para terminar la partida: Se cierra la actividad, vuelve al menú y se corta la conexión.
+        //Se crea un dialog con dos botones: Aceptar y Cancelar.
+
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_exit);
 

@@ -18,9 +18,12 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_splash);
 
+        //imageview del logo
         ImageView titulo = (ImageView) findViewById(R.id.splash_text);
+        //imageview del fondo
         ImageView back = (ImageView) findViewById(R.id.spacebackground);
 
         //animacion background, creamos el objectanimator y le pasamos la view a animar y su propiedad
@@ -30,22 +33,24 @@ public class SplashActivity extends AppCompatActivity {
         scroll.setDuration(4000); //durara 4 segundos
         scroll.start();  //la iniciamos
 
-        //carga la animacion
+        //carga la animacion  del logo
         Animation rotate = AnimationUtils.loadAnimation(this, R.anim.alpha_rotate_scale);
         titulo.startAnimation(rotate);
 
-        //al acabar la animacion...
+        //añadimos los listeners...
         rotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
             }
 
+            //listener cuando acabe la animación.
             @Override
             public void onAnimationEnd(Animation animation) {
+                //intent para ir a menu activity
                 startActivity(new Intent(SplashActivity.this, MenuActivity.class));
                 Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vib.vibrate(500);
+                vib.vibrate(500);   //el móvil vibra medio segundo
                 SplashActivity.this.finish();   //para no volver a la slpash
             }
 
@@ -58,18 +63,16 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
+
         super.onResume();
 
+        //Oculta la barra de notificaciones.
         View decorView = getWindow().getDecorView();
-        // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-        // Remember that you should never show the action bar if the
-        // status bar is hidden, so hide that too if necessary.
 
-        // Hide action bar, la barra de status (hora, notificacinoes, etc)
-        //ActionBar actionBar = getActionBar();
-        //actionBar.hide();
+        //Oculta la barra con el nombre de la aplicación.
         getSupportActionBar().hide();
     }
 }

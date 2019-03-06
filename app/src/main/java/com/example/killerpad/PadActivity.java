@@ -37,80 +37,112 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
         setContentView(R.layout.activity_pad);
         Log.d(TAG,"on create");
 
-
-
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build());
 
-        //poner el valor de las variables segun el valor puesto x los putExtra
+        //Recupera los valores de los extras para que el objeto Handler pueda establecer la conexión.
         Bundle extras = getIntent().getExtras();
 
         String user = extras.getString("user");
         String ip = extras.getString("ip");
         int port = extras.getInt("port");
-        score = 0;
 
         // Cargar TopScore de sharedPreferences
         SharedPreferences prefs = getSharedPreferences("savedPrefs", MODE_PRIVATE);
         topScore = Integer.parseInt(prefs.getString("topScore", "0"));
-
-        Log.d(TAG,"record= " + topScore);
+        //atributo de clase que almacenará la puntuación del jugador en tod.o momento
+        // (empieza en 0 al ser una nueva partida)
+        score = 0;
 
         // Crear los fragments
         createFragments();
+        //crea el dialog Spinner (Loading animation) que se mantendra hasta que se establezca la conexión.
+        createSpinner();
 
-        spinner = new Dialog(this);
-        spinner.setContentView(R.layout.dialog_spinner);
-        spinner.setCancelable(false);
 
-        FloatingActionButton cancel = spinner.findViewById(R.id.spcancel);
-        cancel.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sayBye();
-                    }
-                }
-        );
-
-        spinner.show();
-
-        // Crear el handler
+        // Crear el handler para establecer la conexión y arranca su hilo
         this.handler = new Handler(this, user, ip, port);
-        Thread t = new Thread(this.handler);
-        t.start();
+        new Thread(this.handler).start();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        //Oculta la barra con el nombre de la aplicación.
         getSupportActionBar().hide();
-
-        Log.d(TAG,"padActivity:on resume");
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void alertUser () {
+
+        // Crear un dialog informando de un error de conexión.
+        // Dispone de un botón para volver al menú.
+
+        //Utilizamos runOnUi para invocar al hilo que ha creado la jerarquía de vistas para evitar errores.
+        // Ya que como vamos a modificar vistas que forman parte de la jerarquía de vistas creada por PadActivity
+        // Por lo que el único hilo que puede realizar estas modificaciones es el de PadActivity.
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                //Si el handler está conectado lo desconectamos.
+                if(handler.connected) {
+                    handler.disconnect();
+                }
+                //Crea el dialog y recupera su botón de aceptar y le asigna el button listener.
+                alert = new Dialog(PadActivity.this);
+                alert.setContentView(R.layout.dialog_alertuser);
+                FloatingActionButton bot = alert.findViewById(R.id.botonAlertUser);
+                bot.setOnClickListener(PadActivity.this);
+                //Muestra el dialog
+                alert.show();
+            }
+        });
+
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG,"on pause");
+    public void askForConfirmation() {
+        //Crea un dialog que aparece cuando el usuario pulsa el botón EXIT
+        // El usuario puede confirmar si realmente desea salir (vuelta al menú) o cancelar.
 
+        // Método llamado desde el BoardFragment
+
+        //Creamos el Dialog y lo mostramos
+        exitConfirmation = new Dialog(this);
+        exitConfirmation.setContentView(R.layout.dialog_exit);
+        exitConfirmation.show();
+
+        //Recuperamos los botones de aceptar y cancelar para asignarles su correspondiente listener.
+        FloatingActionButton bAcep = exitConfirmation.findViewById(R.id.byeB);
+        FloatingActionButton bCancel = exitConfirmation.findViewById(R.id.cancelByeB);
+
+        //botón aceptar
+        bAcep.setOnClickListener(this);
+        //botón cancelar
+        bCancel.setOnClickListener(this);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG,"on stop");
+    public void createSpinner(){
+        //Método que crea el dialog con la animación del spinner loading.
 
+        //Crea el dialog
+        spinner = new Dialog(this);
+        spinner.setContentView(R.layout.dialog_spinner);
+        //se deshabilita la función para cancelarlo
+        spinner.setCancelable(false);
+
+        //Recupera el botón cancelar del dialog y le asigna el listener.
+        FloatingActionButton cancel = spinner.findViewById(R.id.spcancel);
+        cancel.setOnClickListener(this);
+
+        //muestra el dialog
+        spinner.show();
     }
 
     public void createFragments(){
+
+        //Método que hace las transacciones de los fragments
 
         FragmentManager fm = getSupportFragmentManager();
 
@@ -136,132 +168,15 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
 
     }
 
-    public void askForConfirmation() {
-        // Método llamado desde el BoardFragment al pulsar el boton EXIT
-        exitConfirmation = new Dialog(this);
-        exitConfirmation.setContentView(R.layout.dialog_exit);
-        exitConfirmation.show();
-
-        FloatingActionButton bAcep = exitConfirmation.findViewById(R.id.byeB);
-        FloatingActionButton bCancel = exitConfirmation.findViewById(R.id.cancelByeB);
-
-        // Al pulsar boton aceptar: volvemos al menu
-        bAcep.setOnClickListener(this);
-
-        // Al pulsar boton cancelar: se oculta el dialog
-        bCancel.setOnClickListener(this);
-    }
-
-    public void sayBye(){
-        // El handler le envia un mensaje al servidor para notificar la desconexión
-        if(handler.connected) {
-            this.handler.disconnect();
-        }
-
-        startActivity(new Intent(this, MenuActivity.class));
-        finish();
-
-    }
-
-    public void vibrar(int duration) {
-        Vibrator vib = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-        vib.vibrate(duration);
-    }
-
-    public void updateScores(final int points) {
-        FragmentManager fm = getSupportFragmentManager();
-        BoardFragment bf = (BoardFragment) fm.findFragmentById(R.id.board_container);
-        final TextView text = bf.getScoreTV();
-        final int score = Integer.parseInt(text.getText().toString());
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                text.setText(String.valueOf(score + points));
-            }
-        });
-
-        this.score += points;
-
-        if (this.score > this.topScore) {
-            setTopScore("topScore", this.score);
-
-            // pruebaaaaa
-            this.handler.sendMessage("from el janler:El topScore es " + this.topScore);// quitar, kk solo test
-        }
-    }
-
-    // guarda el topScore en las shared preferences
-    public void setTopScore(String key, int value){
-        this.topScore = value;
-
-        // Guarda el topScore
-        SharedPreferences.Editor sp;
-        sp = getSharedPreferences("savedPrefs", MODE_PRIVATE).edit();    // pq es "s"
-        sp.putString(key, String.valueOf(value));
-        sp.commit();
-    }
-
-    public Handler getHandler() {
-        return this.handler;
-    }
-
-    public Dialog getSpinner() {
-        return spinner;
-    }
-
-    public void dead() {
-        Log.d("TAG", "PadActivity0.0: dead ");
-
-    }
-
-    public void alertUser () {
-        Log.d("TAG", "PadActivity0: ONcLICK ");
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("TAG", "PadActivity1: ONcLICK ");
-                if(handler.connected) {
-                    handler.disconnect();//creo que da error xk socket=null REVISAR
-                }
-                Log.d("TAG", "PadActivity2: ONcLICK " + Thread.currentThread().getName());
-                alert = new Dialog(PadActivity.this);
-                alert.setContentView(R.layout.dialog_alertuser);
-                FloatingActionButton bot = alert.findViewById(R.id.botonAlertUser);
-
-                Log.d("TAG", "PadActivity3: ONcLICK " + Thread.currentThread().getName());
-                // Al pulsar boton aceptar: volvemos al menu
-                bot.setOnClickListener(PadActivity.this);
-                //Activity com.example.killerpad.PadActivity has leaked window DecorView@1b910e2[PadActivity] that was originally added here
-                alert.show();
-            }
-        });
-
-    }
-
-    public void mayBeYouWantRestart(){
-        Log.d("TAG", "PadActivity: mayBeYouWantRestart " + Thread.currentThread().getName());
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                restart = new Dialog(PadActivity.this);
-                restart.setContentView(R.layout.dialog_restart);
-                restart.setCancelable(false);
-
-                FloatingActionButton bRestart = restart.findViewById(R.id.botonRestart);
-                bRestart.setOnClickListener(PadActivity.this);
-                bRestart.setClickable(false);
-
-                FloatingActionButton bCancel = restart.findViewById(R.id.botonCancelRestart);
-                bCancel.setOnClickListener(PadActivity.this);
-
-                restart.show();
-                cuentaAtras();
-            }
-        });
-
-    }
-
     public void cuentaAtras() {
+
+        //Método para ir actualizando la cuenta atrás del dialog Restart.
+        //Cuando la cuenta atrás acaba habilita el botón Reaparecer.
+
+
+        //Utilizamos runOnUi para invocar al hilo que ha creado la jerarquía de vistas para evitar errores.
+        // Ya que como vamos a modificar vistas que forman parte de la jerarquía de vistas creada por PadActivity
+        // Por lo que el único hilo que puede realizar estas modificaciones es el de PadActivity.
 
         runOnUiThread(new Runnable() {
             @Override
@@ -286,7 +201,41 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
 
     }
 
+    public void mayBeYouWantRestart(){
+
+        //Método que crea un dialog para mostrar una cuenta atrás cuando el jugador muere.
+        //El usuario cuenta con dos botones: Reaparecer y Salir.
+        // Cuando se crea el dialog el botón Reaparecer está deshabilitado.
+        // El botón Salir vuelve al menú.
+
+        //Utilizamos runOnUi para invocar al hilo que ha creado la jerarquía de vistas para evitar errores.
+        // Ya que como vamos a modificar vistas que forman parte de la jerarquía de vistas creada por PadActivity
+        // Por lo que el único hilo que puede realizar estas modificaciones es el de PadActivity.
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                restart = new Dialog(PadActivity.this);
+                restart.setContentView(R.layout.dialog_restart);
+                restart.setCancelable(false);
+
+                FloatingActionButton bRestart = restart.findViewById(R.id.botonRestart);
+                bRestart.setOnClickListener(PadActivity.this);
+                bRestart.setClickable(false);
+
+                FloatingActionButton bCancel = restart.findViewById(R.id.botonCancelRestart);
+                bCancel.setOnClickListener(PadActivity.this);
+
+                restart.show();
+                cuentaAtras();
+            }
+        });
+
+    }
+
     private void resetBoard() {
+
+        //Método llamado por el botón "Reparecer" del Dialog "Restart" para poner el
+        // marcador de puntos a 0 otra vez (Cada vez que el usuario muere y reaparece).
 
         FragmentManager fm = getSupportFragmentManager();
         BoardFragment bf = (BoardFragment) fm.findFragmentById(R.id.board_container);
@@ -294,13 +243,92 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
         text.setText("0");
     }
 
+    public void sayBye(){
+
+        //Método para cortar la conexión y volver al menú.
+
+        if(handler.connected) {
+            this.handler.disconnect();
+        }
+
+
+        startActivity(new Intent(this, MenuActivity.class));
+        finish();
+    }
+
+    public void setTopScore(String key, int value){
+        //Método llamado por updateScores para almacenar la puntuación si hay record.
+
+        // guarda el topScore en las shared preferences
+        this.topScore = value;
+
+        // Guarda el topScore
+        SharedPreferences.Editor sp;
+        sp = getSharedPreferences("savedPrefs", MODE_PRIVATE).edit();    // pq es "s"
+        sp.putString(key, String.valueOf(value));
+        sp.commit();
+    }
+
+    public void updateScores(final int points) {
+
+        //Recuperamos el boardfragment para poder acceder a su método getScoreTV para obtener la puntuación actual
+        // y la parseamos a int.
+        FragmentManager fm = getSupportFragmentManager();
+        BoardFragment bf = (BoardFragment) fm.findFragmentById(R.id.board_container);
+
+        final TextView text = bf.getScoreTV();
+
+        final int score = Integer.parseInt(text.getText().toString());
+
+        //Utilizamos runOnUi para invocar al hilo que ha creado la jerarquía de vistas para evitar errores.
+        // Ya que como vamos a modificar vistas que forman parte de la jerarquía de vistas creada por PadActivity
+        // Por lo que el único hilo que puede realizar estas modificaciones es el de PadActivity.
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                //se actualiza la puntuación de la vista
+                text.setText(String.valueOf(score + points));
+            }
+        });
+
+        //actualizamos nuestro atributo de puntos para tener constancia de los puntos en to.do momento
+        // Después comparamos si la puntuación actual es superior a la TopScore que recuperamos
+        // al principio de las shared preferences, en caso afirmativo actualizamos el record con SetScores.
+
+        this.score += points;
+
+        if (this.score > this.topScore) {
+            setTopScore("topScore", this.score);
+        }
+    }
+
+    public void vibrar(int duration) {
+        //Método para vibrar la durante el periodo de tiempo en milisegundos pasado por parámetro.
+        // (Requiere permisos para vibrar en manifest)
+        Vibrator vib = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        vib.vibrate(duration);
+    }
+
+    public Handler getHandler() {
+        return this.handler;
+    }
+
+    public Dialog getSpinner() {
+        return spinner;
+    }
+
     @Override
     public void onJoystickMoved(float xPercent, float yPercent, int source) {
         //  Log.d("move","X: "+xPercent+" Y: "+yPercent);
+        //Método para futura implementación.
     }
 
     @Override
     public void directionChanged(String direction) {
+
+        //Método callback para ser notificado de los mensajes de dirección del joystick
         Log.d("move", direction);
         //handler.sendMessage("pad:" + direction);
         handler.sendMessage(direction);
@@ -309,24 +337,8 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
     @Override
     public void onClick(View v) {
 
-        /*
-        Funciona de las dos maneras
-
-        1)
-        Log.d(TAG,"a"+v.getId());
-        Log.d(TAG,"b"+R.id.botonAlertUser);
-
-        2)
-        Log.d(TAG, "a " + alert.findViewById(R.id.botonAlertUser).getId());
-        Log.d(TAG, "b " + v.getId());
-
-        PD: nada nuevo, pero odio android
-        */
-
         int clickedButtonID = v.getId();
             if (clickedButtonID==R.id.botonAlertUser) {
-                Log.d("TAG", "PadActivity: ONcLICK listener " + Thread.currentThread().getName());
-
                 startActivity(new Intent(this, MenuActivity.class));
                 finish();
             } else if (clickedButtonID == R.id.byeB) {
@@ -339,6 +351,8 @@ public class PadActivity extends AppCompatActivity implements JoystickView.Joyst
                 handler.sendMessage("replay");
                 resetBoard();
                 restart.hide();
+            }else if(clickedButtonID == R.id.spcancel){
+                sayBye();
             }
     }
 }

@@ -22,14 +22,18 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_buttons, container, false);
 
+        //almacena el handler.
         this.handler = ((PadActivity) this.getActivity()).getHandler();
 
+        //Añade los Listeners a los botones de disparo y kill me
         this.bSend = v.findViewById(R.id.send);
         bSend.setOnClickListener(this);
 
         this.bSuicide = v.findViewById(R.id.killMe);
+
         // -- escuchador desactivado --
         //bSuicide.setOnClickListener(this);
 
@@ -40,11 +44,14 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
         int button = v.getId();
 
+        //botón KillMe (desactivado)
         if (button == R.id.killMe) {
             this.handler.sendMessage("replay");
 
+        //botón de disparo
         } else if (button == R.id.send) {
             this.handler.sendMessage("shoot");
 

@@ -16,22 +16,6 @@ import android.widget.EditText;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private static String TAG = "TAG";
-    private SharedPreferences.Editor sp;    // pq Editor?
-
-    // guarda las configuraciones de las shared preferences
-    public void savePreferences(String key, String value){
-        sp = getSharedPreferences("savedPrefs", MODE_PRIVATE).edit();    // pq es "s"
-        sp.putString(key, value);
-        sp.commit();
-    }
-
-    // carga las preferencias de las shared preferences
-    public String loadPreference(String key){
-        SharedPreferences prefs = getSharedPreferences("savedPrefs", MODE_PRIVATE);
-        String restoredText = prefs.getString(key, "");
-        return restoredText;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +23,6 @@ public class MenuActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_menu);
 
-        Log.d(TAG, "holaaaaa");
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.menu_container);
         if (fragment == null) {
@@ -56,13 +39,22 @@ public class MenuActivity extends AppCompatActivity {
         getSupportActionBar().hide();
     }
 
-    public SharedPreferences.Editor getSp() {
-        return sp;
+
+    // carga las preferencias de las shared preferences
+    public String loadPreferences(String key){
+        SharedPreferences prefs = getSharedPreferences("savedPrefs", MODE_PRIVATE);
+        String restoredText = prefs.getString(key, "");
+        return restoredText;
     }
 
-    public void setSp(SharedPreferences.Editor sp) {
-        this.sp = sp;
+    // guarda las configuraciones de las shared preferences
+    public void savePreferences(String key, String value){
+        SharedPreferences.Editor sp;
+        sp = getSharedPreferences("savedPrefs", MODE_PRIVATE).edit();    // pq es "s"
+        sp.putString(key, value);
+        sp.commit();
     }
+
 
 
 }

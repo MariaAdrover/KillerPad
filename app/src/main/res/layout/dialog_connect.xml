@@ -1,88 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundrepeat"
+    android:minWidth="300dp"
+    android:minHeight="200dp">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fButtonAceptar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
         android:paddingBottom="4dp"
-        app:backgroundTint="@color/design_default_color_primary"
+        app:backgroundTint="@color/colorWhitesemi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/puerto"
+        app:layout_constraintStart_toStartOf="@+id/guideline10"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fButtonCancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
         android:paddingBottom="4dp"
-        app:backgroundTint="@color/design_default_color_primary"
+        app:backgroundTint="@color/colorWhitesemi"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fButtonAceptar"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/puerto"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
         app:srcCompat="@android:drawable/ic_delete" />
 
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginTop="0dp"
-        android:background="#FFFFBB33"
-        android:contentDescription="@string/app_name"
-        android:scaleType="center"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="33dp" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:paddingLeft="12dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorWhitesemi"
         android:hint="@string/usuario"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:paddingLeft="12dp"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/ip"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
         android:id="@+id/ip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorWhitesemi"
         android:digits="0123456789."
-        android:paddingLeft="12dp"
         android:hint="@string/ip"
+        android:paddingLeft="12dp"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/puerto"
         app:layout_constraintTop_toBottomOf="@+id/username"
         tools:layout_editor_absoluteX="16dp" />
 
     <EditText
         android:id="@+id/puerto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorWhitesemi"
         android:fontFamily="sans-serif"
-        android:paddingLeft="12dp"
         android:hint="@string/puerto"
         android:inputType="number"
+        android:paddingLeft="12dp"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintTop_toBottomOf="@+id/ip"
         tools:layout_editor_absoluteX="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.75" />
 
 
 </android.support.constraint.ConstraintLayout>

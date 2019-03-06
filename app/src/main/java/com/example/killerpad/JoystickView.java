@@ -108,7 +108,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
 
             myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             //elegimos color
-            colors.setARGB(150, 255, 255, 255);
+            colors.setARGB(100, 255, 255, 255);
             //pintamos en el canvas un circulo con las coordenadas, el radio y el color escogido
             myCanvas.drawCircle(centerX, centerY, baseRadius, colors);
             colors.setARGB(255, 150, 150, 150);
@@ -251,7 +251,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
 
 
 
-    //interfaz para notificar
+    //interfaz para notificar los movimientos
     public interface JoystickListener {
 
         //este método indicará los porcentajes X e Y además de la ID del joystick. (por si queremos más)
